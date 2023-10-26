@@ -10,6 +10,11 @@ export default function page() {
         "The purpose of this website is to provide information about our company and the products/services we offer. You can also find answers to common questions and contact us for further assistance.",
     },
     {
+      question: "What is the purpose of this website?",
+      answer:
+        "The purpose of this website is to provide information about our company and the products/services we offer. You can also find answers to common questions and contact us for further assistance.",
+    },
+    {
       question: "How can I contact customer support?",
       answer:
         "You can contact our customer support team by clicking on the 'Contact Us' link in the navigation menu. We are available 24/7 to assist you with any questions or issues.",
