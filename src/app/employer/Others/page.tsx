@@ -1,6 +1,6 @@
 "use client";
 import CardPrototype from "@/components/ui/CardPrototype";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../component/Title";
 import { FaNewspaper } from "react-icons/fa";
 import Image from "next/image";
@@ -42,13 +42,34 @@ export default function Page() {
 
     // Add more blog objects as needed
   ];
-  useEffect(() => {
+  const [data, setData] = useState<any>([]);
+  const [blogcategories, setBlogCategories] = useState([]);
+
+  const blogcategoriesData = async () => {
     try {
-      const data = Requirements.getBLogs();
-      console.log("blog data", data);
+      const data = await Requirements.getBLogcategories();
+      console.log("blog categories data", data.results);
+
+      setBlogCategories(data.results);
+      return data;
+    } catch (error) {
+      console.log("err ", error);
+    }
+  };
+  const blogdata = async () => {
+    try {
+      const data = await Requirements.getBLogs();
+      console.log("blog data", data.results);
+
+      setData(data.results);
+      return data;
     } catch (error) {
       console.log(error);
     }
+  };
+  useEffect(() => {
+    blogdata();
+    blogcategoriesData();
   }, []);
   return (
     <div>
@@ -56,16 +77,19 @@ export default function Page() {
         <Title title="Blogs" icon={<FaNewspaper />} />
         <div className="flex  flex-wrap justify-between items-start py-4 px-6">
           <div className="w-[60%] ">
-            {" "}
-            {blogData.map((item: any, i: any) => (
-              <BlogCard
-                key={i}
-                title={item.title}
-                category={item.category}
-                createdOn={item.createdOn}
-                content={item.content}
-              />
-            ))}{" "}
+            {data.map((item: any, i: any) => (
+              <div>
+                <BlogCard
+                  key={i}
+                  title={item.title}
+                  src={item.feature_image_url}
+                  category={item.category?.title}
+                  createdOn={item.created_at}
+                  content={item.body}
+                  author_name={item.author_name}
+                />
+              </div>
+            ))}
           </div>
           <div className=" px-2 w-[36%]  h-[60vh]  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <h2 className="italic  font-serif  mt-4"> Categoies</h2>

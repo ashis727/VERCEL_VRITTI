@@ -212,4 +212,12 @@ export default class ClientController {
       return error;
     }
   };
+  getBLogcategories = async () => {
+    try {
+      const { data } = await axios.get(`${Constants.blogCategories}`);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  };
 }

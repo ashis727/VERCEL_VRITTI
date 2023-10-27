@@ -62,4 +62,5 @@ export class Constants {
   static mobileVerity = `${Constants.API_URL}settings/send-mobile-otp/`;
   static verifyOtpemployer = `${Constants.API_URL}settings/verify-otp/`;
   static blog = `${Constants.API_URL}blogs/blogs/`;
+  static blogCategories = `${Constants.API_URL}blogs/category/`;
 }
