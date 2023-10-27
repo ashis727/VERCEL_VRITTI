@@ -76,7 +76,7 @@ export default function Page() {
       <CardPrototype>
         <Title title="Blogs" icon={<FaNewspaper />} />
         <div className="flex  flex-wrap justify-between items-start py-4 px-6">
-          <div className="w-[60%] ">
+          <div className="w-[61%] ">
             {data.map((item: any, i: any) => (
               <div>
                 <BlogCard
