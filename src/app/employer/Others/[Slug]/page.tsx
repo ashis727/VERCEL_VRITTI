@@ -7,7 +7,7 @@ import EditorJsonComponents from "../../component/EditorJson";
 export default async function SingleBlog({ params }: any) {
   const Requirements = new ClientController();
   const data = await Requirements.getBLogs(params?.Slug);
-  console.log("data", data?.author_name);
+  // console.log("data", data?.author_name);
   return (
     <div>
       <CardPrototype>
