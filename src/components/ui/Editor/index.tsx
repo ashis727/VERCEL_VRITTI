@@ -9,6 +9,7 @@ type Props = {
   onChange(val: any): void;
   holder: string;
 };
+// console.log("first");
 
 const EditorBlock = ({ data, onChange, holder }: Props) => {
   //add a reference to editor
