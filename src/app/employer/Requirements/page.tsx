@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import ThankYouModal from "../component/ThankYouModal";
 import FAQAccordion from "../component/FaqAccordian";
 import { CiEdit } from "react-icons/ci";
+import dynamic from "next/dynamic";
 const validationSchema = Yup.object().shape({
   job_title: Yup.string().required("Job Title is required"),
   job_short_description: Yup.string().required(
@@ -39,23 +40,11 @@ const validationSchema = Yup.object().shape({
     "Additional Documents is required"
   ),
 });
+const EditorBlock = dynamic(() => import("../../../components/ui/Editor"), {
+  ssr: false,
+});
+
 export default function Requirements() {
-  // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNoYWhhdEBhbGFkaW5udGVjaC5pbiIsImlkIjoxMSwic2VjcmV0X3Rva2VuIjoiZDM4ZTk5ZWUtODczNy00YjA4LWI2NmYtNWM2NzU3NzVmM2E4In0.gG0tAvOeNxCAkYwsiIeWZ8V3fHLWtLsTEaXSY7gF1q0"
-  // const requirements = new ClientController();
-  // const { id } = props;
-  // console.log("first id", id);
-
-  // if(id) {
-  //       try {
-  //     const data = requirements.updateRequirements(token, id);
-  //     console.log("first req data", data);
-
-  //     return data;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
   const Requirements = new ClientController();
   const { data } = useSession();
   console.log("first session", data);
@@ -162,8 +151,9 @@ export default function Requirements() {
       { value: "I", label: "Internship" },
     ];
   };
-  const formData = new FormData();
+
   const handleSubmit = (values: any) => {
+    const formData = new FormData();
     console.log("first desp", values);
     const file = values?.image;
     const addFile = values?.additional_documents;
@@ -183,7 +173,7 @@ export default function Requirements() {
     formData.append("language_requirements", values.language_requirements);
     formData.append("image", file);
     formData.append("additional_documents", addFile);
-    formData.append("description", values.description);
+    formData.append("description", JSON.stringify(values?.description));
 
     Requirements.postEmployerRequirements(sessiontoken, formData)
       .then((res) => {
@@ -191,6 +181,7 @@ export default function Requirements() {
       })
       .catch((err) => {});
   };
+
   return (
     <CardPrototype className=" ">
       <Formik
@@ -259,9 +250,20 @@ export default function Requirements() {
                     onChange={handleChange}
                   />
                 </div>
+
+                <label> Description</label>
                 <div className="col-span-full">
-                  <div className="mt-2">
-                    <TextBox
+                  <div className=" border-2">
+                    <EditorBlock
+                      data={values.description}
+                      onChange={(e) => {
+                        console.log(e);
+                        setFieldValue("description", e);
+                      }}
+                      holder="editorjs-container"
+                    />
+
+                    {/* <TextBox
                       value={values.description}
                       error={errors.description}
                       istouched={touched.description}
@@ -270,7 +272,7 @@ export default function Requirements() {
                       placeholder="description"
                       className="block w-full  rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       onChange={handleChange}
-                    />
+                    /> */}
                   </div>
                 </div>
 

@@ -204,9 +204,9 @@ export default class ClientController {
     }
   };
 
-  getBLogs = async () => {
+  getBLogs = async (string: "") => {
     try {
-      const { data } = await axios.get(`${Constants.blog}`);
+      const { data } = await axios.get(`${Constants.blog}${string}`);
       return data;
     } catch (error) {
       return error;

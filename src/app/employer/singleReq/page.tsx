@@ -29,6 +29,7 @@ import moment from "moment";
 import { GrClock, GrLocation } from "react-icons/gr";
 import { CiClock1, CiLock } from "react-icons/ci";
 import { HiClock, HiCurrencyDollar, HiCurrencyRupee } from "react-icons/hi";
+import EditorJsonComponents from "../component/EditorJson";
 
 // import {
 //   useParams,
@@ -166,8 +167,15 @@ export default function Page() {
                 Job description
               </h2>
               <p className="text-[#383d53] font-sans text-[14x] line-height-[18px] font-[400] capitalize flex items-center ">
-                Detail :{job.description}
+                Detail :
+                {job.description && (
+                  <EditorJsonComponents
+                    style={"text-base font-[400] text-gray-900"}
+                    jsonData={JSON.parse(job.description)}
+                  />
+                )}
               </p>
+
               <div className=" mt-2 ">
                 <li className="text-[#383d53] font-sans text-[14x]  font-[400]    ">
                   Should have minimum {job.experience} year of experience .
