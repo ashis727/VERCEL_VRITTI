@@ -167,13 +167,13 @@ export default function Page() {
                 Job description
               </h2>
               <p className="text-[#383d53] font-sans text-[14x] line-height-[18px] font-[400] capitalize flex items-center ">
-                Detail :
-                {job.description && (
+                Detail :{job.description}
+                {/* {job.description && (
                   <EditorJsonComponents
                     style={"text-base font-[400] text-gray-900"}
                     jsonData={JSON.parse(job.description)}
                   />
-                )}
+                )} */}
               </p>
 
               <div className=" mt-2 ">

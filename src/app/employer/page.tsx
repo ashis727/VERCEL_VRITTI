@@ -9,10 +9,8 @@ import UserList from "@/components/ui/UserList";
 import { Dummy } from "@/constants/dummy";
 import Buttons from "@/components/controls/Buttons";
 import Pagination from "@/components/ui/Paginated";
-import { Provider } from "react-redux";
-import Providers from "@/store/Providers";
 import Infocard from "./component/InfoCard";
-import Breadcrumb from "./component/BreadCrumbs";
+
 export default function Dashboard() {
   return (
     <div>

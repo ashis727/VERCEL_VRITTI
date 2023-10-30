@@ -66,15 +66,16 @@ export default function Utilcard({
                     <BsFillEyeFill />
                     <span className="px-1">view</span>
                   </Link>
-                  <button
+                  <Link
+                    href={`/employer/requirements?id=${selectedid}`}
                     className={`flex items-center text-blue-600  hover:cursor-pointer ${
                       editDisabled ? "flex" : "hidden"
                     }`}
-                    disabled={editDisabled}
+                    onClick={() => console.log("first req id", selectedid)}
                   >
                     <BiEdit />
                     <span className="px-1">edit</span>
-                  </button>
+                  </Link>
                   <button
                     className={`flex items-center text-blue-600  hover:cursor-pointer  ${
                       deleteDisabled ? "flex" : "hidden"

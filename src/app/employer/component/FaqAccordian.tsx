@@ -15,7 +15,7 @@ const FAQAccordion = ({ faqData }: any) => {
   return (
     <CardPrototype>
       <div className="w-full">
-        <h1 className="text-3xl font-[500] px-4 mb-4  ">
+        <h1 className="text-3xl font-[500] px-4 mb-4  text-gray-800 ">
           Frequently asked questions
         </h1>
         {faqData.map((item: any, index: any) => (
@@ -24,7 +24,7 @@ const FAQAccordion = ({ faqData }: any) => {
               onClick={() => toggleAccordion(index)}
               className="flex justify-between items-center cursor-pointer py-2 px-4 transition  duration-500 ease-in-out"
             >
-              <h2 className="text-lg">{item.question}</h2>
+              <h2 className="text-lg text-gray-600">{item.question}</h2>
               <span
                 className={
                   activeIndex === index
@@ -36,7 +36,7 @@ const FAQAccordion = ({ faqData }: any) => {
               </span>
             </div>
             <div
-              className={`px-4  py-2 ${
+              className={`px-4 text-gray-500  py-2 ${
                 activeIndex === index
                   ? "max-h-80 opacity-100"
                   : "max-h-0 opacity-0 overflow-hidden"

@@ -63,7 +63,7 @@ export class Menu {
         },
         {
           menuItem: "FAQs",
-          href: "/employer/Faqs",
+          href: "/employer/faqs",
           subMenu: [],
           icon: CgMenuLeftAlt,
         },
@@ -75,7 +75,7 @@ export class Menu {
         },
         {
           menuItem: "About Us",
-          href: "/employer/About",
+          href: "/employer/about",
           subMenu: [],
           icon: CgMenuLeftAlt,
         },

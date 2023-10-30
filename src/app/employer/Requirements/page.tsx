@@ -14,6 +14,7 @@ import ThankYouModal from "../component/ThankYouModal";
 import FAQAccordion from "../component/FaqAccordian";
 import { CiEdit } from "react-icons/ci";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 const validationSchema = Yup.object().shape({
   job_title: Yup.string().required("Job Title is required"),
   job_short_description: Yup.string().required(
@@ -45,20 +46,45 @@ const EditorBlock = dynamic(() => import("../../../components/ui/Editor"), {
 });
 
 export default function Requirements() {
+  const test = useSearchParams();
+  let id: any = test.get("id");
+  console.log("first req id", id);
   const Requirements = new ClientController();
   const { data } = useSession();
-  console.log("first session", data);
+  // console.log("first session", data);
   let sessiontoken: any = data?.user?.image;
-  console.log("first session token : ", sessiontoken);
+  // console.log("first session token : ", sessiontoken);
 
   const [selectedcategory, setSelectedCategory] = useState<any>(0);
   const [showModal, setShowModal] = useState(false);
+  const [reqData, setReqData] = useState<any>({});
   const handleShowModal = () => {
     setShowModal(true);
   };
   const handleCloseModal = () => {
     setShowModal(false);
   };
+  let predata = {};
+  const requirements = new ClientController();
+  const reqById = async () => {
+    // console.log("first selectedd id  :", id);
+    try {
+      const { data }: any = await requirements.getRequirementById(
+        sessiontoken,
+        id
+      );
+      console.log(" data for req by id ", data);
+      predata = data?.data;
+      setReqData(data);
+      // setjob(data?.data);
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    reqById();
+  }, []);
   const job_category = async () => {
     try {
       let data = await Requirements.getJobCategories();
@@ -174,7 +200,6 @@ export default function Requirements() {
     formData.append("image", file);
     formData.append("additional_documents", addFile);
     formData.append("description", JSON.stringify(values?.description));
-
     Requirements.postEmployerRequirements(sessiontoken, formData)
       .then((res) => {
         console.log("first response of req", res);
@@ -186,25 +211,26 @@ export default function Requirements() {
     <CardPrototype className=" ">
       <Formik
         initialValues={{
-          job_title: "",
-          job_short_description: "",
-          workplace_type: "",
-          job_location: "",
-          employment_type: "",
-          industry: "",
-          job_category: "",
-          job_department: "",
-          preferred_qualification: "",
-          experience: "",
-          salary: "",
-          application_deadline: "",
-          language_requirements: "",
-          image: null,
-          additional_documents: null,
-          description: "",
+          job_title: reqData?.job_title || "",
+          job_short_description: reqData?.job_short_description || "",
+          workplace_type: reqData?.workplace_type || "",
+          job_location: reqData?.job_location || "",
+          employment_type: reqData?.employment_type || "",
+          industry: reqData?.industry || "",
+          job_category: reqData?.job_category || "",
+          job_department: reqData?.job_department || "",
+          preferred_qualification: reqData?.preferred_qualification || "",
+          experience: reqData?.experience || "",
+          salary: reqData?.salary || "",
+          application_deadline: reqData?.application_deadline || "",
+          language_requirements: reqData?.language_requirements || "",
+          image: reqData?.image || null,
+          additional_documents: reqData?.additional_documents || null,
+          description: reqData?.description || "",
         }}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
+        enableReinitialize
       >
         {({
           handleChange,
@@ -219,10 +245,22 @@ export default function Requirements() {
         }: any) => (
           <div className="space-y-12 px-6">
             <div className="border-b border-gray-900/10 pb-12">
-              <span className="flex items-center text-3xl ">
-                {" "}
-                Requirement <CiEdit className="mx-4" />
-              </span>
+              {id ? (
+                <span
+                  className="flex items-center text-3xl "
+                  onClick={() => {
+                    console.log(reqData);
+                  }}
+                >
+                  {" "}
+                  Requirement Update <CiEdit className="mx-4" />
+                </span>
+              ) : (
+                <span className="flex items-center text-3xl ">
+                  {" "}
+                  Requirement <CiEdit className="mx-4" />
+                </span>
+              )}
               <p className="mt-1 text-sm leading-6 text-gray-600">
                 Please fill the require details
               </p>
@@ -278,17 +316,27 @@ export default function Requirements() {
 
                 <div className="sm:col-span-3">
                   <Combobox
-                    label={"workplace_type Type"}
+                    label={"Workplace Type"}
                     error={errors.workplace_type}
                     istouched={touched.workplace_type}
                     name="workplace_type"
                     onChange={(e: any) => {
                       // console.log("Selected value:", e.key);
-                      setFieldValue("workplace_type", e.value);
+                      reqData.workplace_type
+                        ? setFieldValue(
+                            "workplace_type",
+                            reqData.workplace_type
+                          )
+                        : setFieldValue("workplace_type", e.value);
                     }}
                     loadOptions={workplace_type}
-                    placeholder={"Select workplace_type type"}
-                    // value={values.workplace_type}
+                    placeholder={
+                      reqData.workplace_type == "R"
+                        ? "Remote"
+                        : reqData.workplace_type == "H"
+                        ? "Hybrid"
+                        : "Work form home"
+                    }
                   />
                 </div>
                 <div className="sm:col-span-3">
@@ -302,7 +350,8 @@ export default function Requirements() {
                       setFieldValue("job_location", e.key);
                     }}
                     loadOptions={job_location}
-                    placeholder={"Select City"}
+                    placeholder={values.job_location.name}
+
                     //  value={values.job_location}
                   />
                 </div>

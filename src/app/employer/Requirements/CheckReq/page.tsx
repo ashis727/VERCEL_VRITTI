@@ -146,8 +146,8 @@ export default function Checkrequirements() {
                 selectedid={job.id}
                 setSelecetedid={setSelectedid}
                 createdat={job.created_at}
-                viewDisabled={true}
-                editDisabled={false}
+                viewDisabled={false}
+                editDisabled={true}
                 deleteDisabled={true}
                 handleview={openModal}
                 view={view}

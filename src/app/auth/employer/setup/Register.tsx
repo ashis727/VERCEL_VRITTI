@@ -8,7 +8,7 @@ import Combobox from "@/components/controls/ComboBox";
 import ClientController from "@/controllers/employerAuth";
 import { useSession } from "next-auth/react";
 import { useAppSelector } from "@/store";
-import { schema } from "./page";
+// import { schema } from "./page";
 
 export default function Register() {
   const auth = new ClientController();
@@ -41,7 +41,7 @@ export default function Register() {
   const { values, submitForm } = useFormikContext();
 
   const handlePhoneVerify = async (e: any) => {
-    const values: schema = {
+    const values: any = {
       email: "dummy@vrittigroup.com",
       phone: e.target.value,
     };

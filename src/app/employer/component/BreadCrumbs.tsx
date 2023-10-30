@@ -25,7 +25,7 @@ const Breadcrumb = () => {
           </button>
 
           <div>
-            <h2 className="text-xl text-uppercase">{currentPage}</h2>
+            <h2 className="text-xl uppercase  text-gray-700">{currentPage}</h2>
 
             <div className="mx-auto">
               <span className="list-none p-0 inline-flex text-sm text-gray-400">
